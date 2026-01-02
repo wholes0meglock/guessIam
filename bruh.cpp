@@ -1,54 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define int long long
 void help() {
-    string s;
-    int n;
-    cin >> n;
-    cin >> s;
+    int n,m;
+    cin >> n >> m;
     vector<int> vec;
-    for(int i = 0; i < n/2; i++)
-        {
-            for(int j = n-i-1;;)
-            {
-                if(s[i] != s[j])
-                {
-                    vec.push_back(i);
-                }
-                break;
-            }
-        }
-        // for(int i : vec)
-        // {
-        //     cout << i << endl;
-        // }
-    if(vec.empty() == true)
-        {
-            cout << "Yes" << endl;
-            return;
-        }
-    sort(vec.begin(), vec.end());    
-    int t = vec.size();
-    for(int i = 1; i < t; i++)
-        {
-            if(vec[i] - vec[i-1] != 1)
-            {
-                cout << "No" << endl;
-                return;
-            }
-        }
-    cout << "Yes" << endl;
-        
-   
+    for(int i = 0; i < m; i++)
+    {
+        int num;
+        cin >> num;
+        vec.push_back(num);
+    }
+    sort(vec.begin(),vec.end());
+    // int longest = 1;
+    vector<int> final;
+    for(int i = 1; i < m; i++)
+    {
+        int num = vec[i] - vec[i-1] - 1;
+        final.push_back(num);
+        // longest = max(longest,num);
+    }
+    // longest = max(longest,vec[0] - 1 + n - vec[m-1]);
+    int num = vec[0] - 1 + n - vec[m-1];
+    final.push_back(num);
+    sort(final.begin(),final.end(),[](const int& a, const int& b)   
+    {
+    return a > b;
+    });
+    // for(int i : final)
+    // {
+    //     cout << i << " ";
+    // }
+    // cout << endl;
+    int total = 0;
+    if(final[0] > 1) final[0]--;
+    total += final[0];
+    for(int i = 1; i < final.size(); i++)
+    {
+        if(final[i] >= 2*(i+1)) final[i] -= 2*(i+1);
+        if(final[i] > 0) total += (final[i] - 1);
+    }
+    cout << n - total << endl;
 }
 
-int main() {
+signed main()
+{
+    //Jesus saves.
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t;
     cin >> t;
-    while (t--) {
-        help();
-    }
-    return 0;
+    while(t--)
+    help();
 }
 
