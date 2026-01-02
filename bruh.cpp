@@ -33,12 +33,17 @@ void help() {
     // }
     // cout << endl;
     int total = 0;
-    if(final[0] > 1) final[0]--;
-    total += final[0];
-    for(int i = 1; i < final.size(); i++)
+    // if(final[0] > 1) final[0]--;
+    // total += final[0];
+    // for(int i = 1; i < final.size(); i++)
+    // {
+    //     if(final[i] >= 2*(i+1)) final[i] -= 2*(i+1);
+    //     if(final[i] > 0) total += (final[i] - 1);
+    // }
+    for(int i = 0; i < final.size(); i++)
     {
-        if(final[i] >= 2*(i+1)) final[i] -= 2*(i+1);
-        if(final[i] > 0) total += (final[i] - 1);
+        int temp = final[i] - 2*i;
+        if(temp > 0) total += temp - 1;
     }
     cout << n - total << endl;
 }
