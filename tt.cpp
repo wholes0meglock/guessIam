@@ -1,37 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
-void help()
-{
-   int n,m;
-   cin >> n >> m;
-   string x;
-   string s;
-   cin >> x;
-   cin >> s;
-   int count;
-   
-   for(count = 0; x.length() <= m + n; count++)
-   {
-    size_t pos = x.find(s);
-    if (pos == string::npos)
+#define int long long
+void help() {
+    int n,q;
+    cin >> n >> q;
+    vector<int> vec;
+    for(int i = 0; i < n; i++)
     {
-        x = x + x;
+        int num;
+        cin >> num;
+        vec.push_back(num);
     }
-    else
+    vector<int> queries;
+    map<int,vector<int>> m;
+    map<int,int> m1;
+    for(int i = 0; i < q; i++)
     {
-        cout<<count<<endl;
-        return;
+        int num;
+        cin >> num;
+        queries.push_back(num);
+        m1[num]++; 
     }
-   }
-   cout<< -1 <<endl;
+    for(auto it : m1)
+    {
+        int count = 0;
+        for(int i = 0; i < n && count <= it.second; i++)
+        {
+            if(it.first == vec[i])
+            {
+                m[it.first].push_back(i+1);
+                count++;
+            }
+        }
+    }
+    for(int i = 0; i < q; i++)
+    {
+        int color = queries[i];
+        int pos = m[color][0];
+        cout << m[queries[i]][0] << " ";
+        for(auto &x : m)
+        {
+            for(auto &j : x.second)
+                if(j < pos) j++; 
+        }
+        m[color].erase(m[color].begin());
+        m[color].insert(m[color].begin(), 1);
+    }    
 }
-int main()
+
+signed main()
 {
-    int t;
-    cin>>t;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t = 1;
+    // cin >> t;
     while(t--)
-    {
-        help();
-    }
-    return 0;
+    help();
 }
